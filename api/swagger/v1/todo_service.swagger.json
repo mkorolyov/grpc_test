@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ToDo service",
+    "version": "1.0",
+    "contact": {
+      "name": "grpc test",
+      "url": "https://github.com/mkorolyov/grpc_test"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/todo": {
+      "post": {
+        "summary": "Create new todo task",
+        "operationId": "Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1CreateRequest": {
+      "type": "object",
+      "properties": {
+        "toDo": {
+          "$ref": "#/definitions/v1ToDo",
+          "title": "Task entity to add"
+        }
+      },
+      "title": "Request data to create new todo task"
+    },
+    "v1CreateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "ID of created task"
+        }
+      },
+      "title": "Contains data of created todo task"
+    },
+    "v1ToDo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Unique integer identifier of the todo task"
+        },
+        "title": {
+          "type": "string",
+          "title": "Title of the task"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detail description of the todo task"
+        },
+        "reminder": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Date and time to remind the todo task"
+        }
+      },
+      "title": "Taks we have to do"
+    }
+  }
+}

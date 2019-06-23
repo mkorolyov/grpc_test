@@ -2,6 +2,33 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+        title: "ToDo service";
+        version: "1.0";
+        contact: {
+            name: "grpc test";
+            url: "https://github.com/mkorolyov/grpc_test";
+        };
+    };
+    schemes: HTTP;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+        key: "404";
+        value: {
+            description: "Returned when the resource does not exist.";
+            schema: {
+                json_schema: {
+                    type: STRING;
+                }
+            }
+        }
+    }
+};
 
 // Taks we have to do
 message ToDo {
@@ -33,5 +60,10 @@ message CreateResponse{
 // Service to manage list of todo tasks
 service ToDoService {
     // Create new todo task
-    rpc Create(CreateRequest) returns (CreateResponse);
+    rpc Create(CreateRequest) returns (CreateResponse){
+        option (google.api.http) = {
+            post: "/v1/todo"
+            body: "*"
+        };
+    }
 }

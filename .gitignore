@@ -1,3 +1,4 @@
 .idea
 cmd/client-grpc/client-grpc
+cmd/client-rest/client-rest
 cmd/server/server
